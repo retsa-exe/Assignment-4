@@ -9,6 +9,7 @@ int speed=2;
 
 zombies zombie;
 ArrayList<citizen> citizens;
+ArrayList<cop> cops;
 
 boolean upPressed = false;
 boolean downPressed = false;
@@ -24,6 +25,12 @@ void setup() {
   citizens = new ArrayList<citizen>();
   for (int i = 0; i < 10; i++) {
     citizens.add(new citizen(random(width), random(height)));
+  }
+  
+  //initialize coops
+  cops = new ArrayList<cop>();
+  for (int i = 0; i < 5; i++) {
+    cops.add(new cop(random(width), random(height)));
   }
 }
 
@@ -48,6 +55,12 @@ void draw() {
         i--; 
       }
     }
+  }
+  
+  //update and draw cops
+  for (int i = 0; i < cops.size(); i++) {
+    cops.get(i).update();
+    cops.get(i).display();
   }
 
   //move the zombie
