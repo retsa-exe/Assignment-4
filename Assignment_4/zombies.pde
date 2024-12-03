@@ -7,6 +7,10 @@ class zombies {
   
   void move(float dx,float dy) {
     pos.add(new PVector(dx,dy));
+    
+    //restrict zombie position
+    pos.x = constrain(pos.x, 0, width);
+    pos.y = constrain(pos.y, 0, height);
   }
 
   void display() {
