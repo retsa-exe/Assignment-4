@@ -10,6 +10,11 @@ int speed=2;
 zombies zombie;
 ArrayList<citizen> citizens;
 
+boolean upPressed = false;
+boolean downPressed = false;
+boolean leftPressed = false;
+boolean rightPressed = false;
+
 void setup() {
   size(800, 600); //set a default window size for testing, may change to full screen if there is more time
 
@@ -46,14 +51,22 @@ void draw() {
   }
 
   //move the zombie
-  if (zombie.isTimeToMove() && keyPressed) { // 检查僵尸是否可以移动
-    if (keyCode == UP) {
+  if (zombie.isTimeToMove()) { 
+    if (upPressed && leftPressed) {
+      zombie.move(-speed, -speed);
+    } else if (upPressed && rightPressed) {
+      zombie.move(speed, -speed);
+    } else if (downPressed && leftPressed) {
+      zombie.move(-speed, speed);
+    } else if (downPressed && rightPressed){
+      zombie.move(speed, speed);
+    } else if (upPressed) {
       zombie.move(0, -speed);
-    } else if (keyCode == DOWN) {
+    } else if (downPressed) {
       zombie.move(0, speed);
-    } else if (keyCode == LEFT) {
+    } else if (leftPressed) {
       zombie.move(-speed, 0);
-    } else if (keyCode == RIGHT) {
+    } else if (rightPressed) {
       zombie.move(speed, 0);
     }
   }
@@ -65,4 +78,28 @@ void draw() {
 boolean isCloseToZombie(zombies z, citizen c) {
   float distance = PVector.dist(z.pos, c.pos);
   return distance < 60;
+}
+
+void keyPressed() {
+  if (keyCode == UP) {
+    upPressed = true;
+  } else if (keyCode == DOWN) {
+    downPressed = true;
+  } else if (keyCode == LEFT) {
+    leftPressed = true;
+  } else if (keyCode == RIGHT) {
+    rightPressed = true;
+  }
+}
+
+void keyReleased() {
+  if (keyCode == UP) {
+    upPressed = false;
+  } else if (keyCode == DOWN) {
+    downPressed = false;
+  } else if (keyCode == LEFT) {
+    leftPressed = false;
+  } else if (keyCode == RIGHT) {
+    rightPressed = false;
+  }
 }
