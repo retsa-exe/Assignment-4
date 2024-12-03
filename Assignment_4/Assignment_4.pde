@@ -30,19 +30,24 @@ void draw() {
   for (int i = 0; i < citizens.size(); i++) {
     citizens.get(i).update();
     citizens.get(i).display();
+    citizen c = citizens.get(i);
+    if (isCloseToZombie(zombie, c)) {
+      fill(255, 0, 0);
+      text("AHHHHHHHH!", c.pos.x + 10, c.pos.y - 10);
+
+      c.stayNearZombie(); 
+      zombie.stayNearCitizen(); 
+
+      if (c.isTimeToRemove()) {
+        citizens.remove(i);
+        i--; 
+      }
+    }
   }
 
   //move the zombie
-  if (keyPressed==true) {
-    if (keyCode == UP && keyCode == LEFT) {
-      zombie.move(-speed, -speed);
-    } else if (keyCode == UP && keyCode == RIGHT) {
-      zombie.move(speed, -speed);
-    } else if (keyCode == DOWN && keyCode == LEFT) {
-      zombie.move(-speed, speed);
-    } else if (keyCode == DOWN && keyCode == RIGHT) {
-      zombie.move(speed, speed);
-    } else if (keyCode == UP) {
+  if (zombie.isTimeToMove() && keyPressed) { // 检查僵尸是否可以移动
+    if (keyCode == UP) {
       zombie.move(0, -speed);
     } else if (keyCode == DOWN) {
       zombie.move(0, speed);
@@ -55,4 +60,9 @@ void draw() {
 
   //draw zombie
   zombie.display();
+}
+
+boolean isCloseToZombie(zombies z, citizen c) {
+  float distance = PVector.dist(z.pos, c.pos);
+  return distance < 60;
 }
