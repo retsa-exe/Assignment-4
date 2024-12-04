@@ -2,6 +2,7 @@ class zombies {
   PVector pos;
   boolean stayingNearCitizen;
   int stopStartTime;
+  int direction = 1;
 
   zombies(float x, float y) {
     pos = new PVector(x, y);
@@ -21,7 +22,16 @@ class zombies {
   void display() {
     noStroke();
     fill(255);
-    ellipse(pos.x, pos.y, 50, 70);
+
+    pushMatrix();
+    translate(pos.x, pos.y);
+    scale(direction, 1);
+    if (isWalking) {
+      image(zombieWalk[zombieFrame%2], 0, 0);
+    } else {
+      image(zombieImage, 0, 0);
+    }
+    popMatrix();
   }
 
   void stayNearCitizen() {

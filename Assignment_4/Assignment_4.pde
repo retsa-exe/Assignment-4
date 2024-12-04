@@ -17,8 +17,22 @@ boolean downPressed = false;
 boolean leftPressed = false;
 boolean rightPressed = false;
 
+PImage zombieImage;
+PImage zombieWalk[];
+
+boolean isWalking;
+int zombieFrame;
+
 void setup() {
   size(800, 600); //set a default window size for testing, may change to full screen if there is more time
+  
+  imageMode(CENTER);
+
+  zombieImage = loadImage("zombie_stand.png");
+
+  zombieWalk = new PImage[2];
+  zombieWalk[0] = loadImage("zombie_walk1.png");
+  zombieWalk[1] = loadImage("zombie_walk2.png");
 
   zombie= new zombies (width/2, height/2); //initialize zombie
 
@@ -48,10 +62,14 @@ void draw() {
   } else if (gameState == 1) {
     //update background
     background(0);
-    
+
+    if (frameCount % 10 == 0) {
+      zombieFrame = (zombieFrame + 1) % zombieWalk.length;
+    }
+
     //check the winning condition
     if (citizens.size()==0) {
-      gameState = 3; 
+      gameState = 3;
     }
 
     //update and draw citizens
@@ -107,6 +125,12 @@ void draw() {
         zombie.move(speed, 0);
       }
     }
+    
+    if (leftPressed || rightPressed || upPressed || downPressed) {
+      isWalking=true;
+    } else {
+      isWalking=false;
+    }
 
     //draw zombie
     zombie.display();
@@ -119,8 +143,7 @@ void draw() {
     text("Game Over", width / 2, height / 2 - 50);
     textSize(20);
     text("Press R to restart", width / 2, height / 2 + 50);
-    
-  } else if (gameState ==3){
+  } else if (gameState ==3) {
     background(0);
     fill(0, 255, 0);
     textAlign(CENTER);
@@ -153,8 +176,10 @@ void keyPressed() {
       downPressed = true;
     } else if (keyCode == LEFT) {
       leftPressed = true;
+      zombie.direction=-1;
     } else if (keyCode == RIGHT) {
       rightPressed = true;
+      zombie.direction=1;
     }
   } else if (gameState == 2 || gameState == 3) {
     if (key == 'R' || key == 'r') {
