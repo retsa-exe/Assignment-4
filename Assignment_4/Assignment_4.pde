@@ -20,6 +20,9 @@ boolean rightPressed = false;
 PImage zombieImage;
 PImage zombieWalk[];
 
+PImage citizenWalk[];
+int citizenFrame;
+
 boolean isWalking;
 int zombieFrame;
 
@@ -35,6 +38,10 @@ void setup() {
   zombieWalk[1] = loadImage("zombie_walk2.png");
 
   zombie= new zombies (width/2, height/2); //initialize zombie
+  
+  citizenWalk = new PImage[2];
+  citizenWalk[0] = loadImage("citizen_walk1.png");
+  citizenWalk[1] = loadImage("citizen_walk2.png");
 
   //initialize citizens
   citizens = new ArrayList<citizen>();
@@ -65,6 +72,7 @@ void draw() {
 
     if (frameCount % 10 == 0) {
       zombieFrame = (zombieFrame + 1) % zombieWalk.length;
+      citizenFrame = (citizenFrame + 1) % citizenWalk.length;
     }
 
     //check the winning condition

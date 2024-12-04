@@ -3,6 +3,7 @@ class citizen {
   PVector velocity;
   int closeStartTime;
   boolean stayingNearZombie;
+  int direction=1;
   
   citizen(float x, float y) {
     pos = new PVector(x, y);
@@ -20,11 +21,22 @@ class citizen {
     if (pos.y < 0 || pos.y > height) {
       velocity.y *= -1;
     }
+    
+    if (velocity.x > 0) {
+      direction = 1; 
+    } else if (velocity.x < 0) {
+      direction = -1; 
+    }
   }
   
   void display() {
     fill(0, 0, 255);
-    ellipse(pos.x, pos.y, 50, 70);
+    
+    pushMatrix();
+    translate(pos.x, pos.y);
+    scale(direction, 1);
+    image(citizenWalk[citizenFrame], 0, 0);
+    popMatrix();
   }
   
   void stayNearZombie() {
