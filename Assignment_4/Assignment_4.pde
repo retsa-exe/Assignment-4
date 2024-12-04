@@ -4,7 +4,7 @@
 //ID: 991786760            //
 /////////////////////////////
 
-int gameState= 0; //0: start screen, 1: game running, 2: game over
+int gameState= 0; //0: start screen, 1: game running, 2: game over, 3: player wins
 
 int speed=2;
 
@@ -46,10 +46,13 @@ void draw() {
     textSize(20);
     text("Press ENTER to start", width / 2, height / 2 + 50);
   } else if (gameState == 1) {
-    // Main game logic
-    background(0);
     //update background
     background(0);
+    
+    //check the winning condition
+    if (citizens.size()==0) {
+      gameState = 3; 
+    }
 
     //update and draw citizens
     for (int i = 0; i < citizens.size(); i++) {
@@ -78,10 +81,9 @@ void draw() {
 
       // Detect distance between zombie and cops
       if (isCloseToCop(zombie, c)) {
-        fill(255, 255, 0);
-        text("Freeze!", c.pos.x + 10, c.pos.y - 10);
 
         zombie.stayNearCop(); // Stop zombie movement
+        gameState= 2; //game over
       }
     }
 
@@ -117,6 +119,15 @@ void draw() {
     text("Game Over", width / 2, height / 2 - 50);
     textSize(20);
     text("Press R to restart", width / 2, height / 2 + 50);
+    
+  } else if (gameState ==3){
+    background(0);
+    fill(0, 255, 0);
+    textAlign(CENTER);
+    textSize(32);
+    text("You Win!", width / 2, height / 2 - 50);
+    textSize(20);
+    text("Press R to restart", width / 2, height / 2 + 50);
   }
 }
 
@@ -145,7 +156,7 @@ void keyPressed() {
     } else if (keyCode == RIGHT) {
       rightPressed = true;
     }
-  } else if (gameState == 2) {
+  } else if (gameState == 2 || gameState == 3) {
     if (key == 'R' || key == 'r') {
       setup(); // Restart the game
       gameState = 0; // Go back to start screen
