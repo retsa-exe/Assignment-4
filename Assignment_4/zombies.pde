@@ -37,4 +37,11 @@ class zombies {
     }
     return !stayingNearCitizen;
   }
+
+  void stayNearCop() {
+    if (!stayingNearCitizen) { // Ensure it doesn't conflict with citizen logic
+      stopStartTime = millis();
+      stayingNearCitizen = true;
+    }
+  }
 }

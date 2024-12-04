@@ -59,8 +59,17 @@ void draw() {
   
   //update and draw cops
   for (int i = 0; i < cops.size(); i++) {
-    cops.get(i).update();
-    cops.get(i).display();
+    cop c = cops.get(i);
+    c.update();
+    c.display();
+    
+    // Detect distance between zombie and cops
+    if (isCloseToCop(zombie, c)) {
+      fill(255, 255, 0);
+      text("Freeze!", c.pos.x + 10, c.pos.y - 10);
+      
+      zombie.stayNearCop(); // Stop zombie movement
+    }
   }
 
   //move the zombie
@@ -91,6 +100,11 @@ void draw() {
 boolean isCloseToZombie(zombies z, citizen c) {
   float distance = PVector.dist(z.pos, c.pos);
   return distance < 60;
+}
+
+boolean isCloseToCop(zombies z, cop c) {
+  float distance = PVector.dist(z.pos, c.pos);
+  return distance < 60; 
 }
 
 void keyPressed() {
