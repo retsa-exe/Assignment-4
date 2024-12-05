@@ -23,7 +23,8 @@ PImage zombieImage;
 PImage zombieWalk[];
 
 PImage citizenWalk[];
-int citizenFrame;
+
+PImage copWalk[];
 
 boolean isWalking;
 int zombieFrame;
@@ -46,6 +47,10 @@ void setup() {
   citizenWalk = new PImage[2];
   citizenWalk[0] = loadImage("citizen_walk1.png");
   citizenWalk[1] = loadImage("citizen_walk2.png");
+  
+  copWalk = new PImage[2];
+  copWalk[0] = loadImage("cop_walk1.png");
+  copWalk[1] = loadImage("cop_walk2.png");
   
   citizenEaten = new PImage[3]; 
   citizenEaten[0] = loadImage("citizen_eaten1.png");
@@ -82,7 +87,6 @@ void draw() {
 
     if (frameCount % 10 == 0) {
       zombieFrame = (zombieFrame + 1) % zombieWalk.length;
-      citizenFrame = (citizenFrame + 1) % citizenWalk.length;
     }
 
     //check the winning condition
