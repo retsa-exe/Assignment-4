@@ -10,6 +10,9 @@ class citizen {
 
 
   boolean isEaten = false;
+  int eatenStartTime = 0; 
+  int eatenDuration = 3000; 
+
 
   citizen(float x, float y) {
     pos = new PVector(x, y);
@@ -64,14 +67,15 @@ class citizen {
     if (!stayingNearZombie && !isEaten) {
       closeStartTime = millis();
       stayingNearZombie = true;
-      velocity = new PVector(0, 0);
-      isEaten = true;
+      velocity = new PVector(0, 0); 
+      isEaten = true; 
+      eatenStartTime = millis();
     }
   }
 
 
   boolean isTimeToRemove() {
-    if (isEaten && eatenFrame == citizenEaten.length - 1) {
+    if (isEaten && millis() - eatenStartTime >= eatenDuration) {
       return true;
     }
     return false;
