@@ -31,6 +31,8 @@ int zombieFrame;
 
 PImage citizenEaten[]; 
 
+PImage walkSide1, walkSide2, walkSide3, street;
+
 void setup() {
   size(800, 600); //set a default window size for testing, may change to full screen if there is more time
   
@@ -56,7 +58,11 @@ void setup() {
   citizenEaten[0] = loadImage("citizen_eaten1.png");
   citizenEaten[1] = loadImage("citizen_eaten2.png");
   citizenEaten[2] = loadImage("citizen_eaten3.png");
-
+  
+  walkSide1 = loadImage("walkSide1.png");
+  walkSide2 = loadImage("walkSide2.png");
+  walkSide3 = loadImage("walkSide3.png");
+  street= loadImage("street.png");
 
   //initialize citizens
   citizens = new ArrayList<citizen>();
@@ -83,7 +89,7 @@ void draw() {
     text("Press ENTER to start", width / 2, height / 2 + 50);
   } else if (gameState == 1) {
     //update background
-    background(0);
+    updateBackground();
 
     if (frameCount % 10 == 0) {
       zombieFrame = (zombieFrame + 1) % zombieWalk.length;
@@ -220,5 +226,25 @@ void keyReleased() {
     leftPressed = false;
   } else if (keyCode == RIGHT) {
     rightPressed = false;
+  }
+}
+
+void updateBackground(){
+  int tileSize = 10; 
+  int rows = height / tileSize; 
+  int cols = width / tileSize;  
+  
+  for (int y = 0; y < rows +1; y++) {
+    for (int x = 0; x < cols +1; x++) {
+      if (y % 35 == 0) {
+        image(walkSide2, x * tileSize, y * tileSize, tileSize, tileSize);
+      } else if (y % 35 >= 1 && y % 35 <= 28) {
+        image(street, x * tileSize, y * tileSize, tileSize, tileSize);
+      } else if (y % 35 == 29) {
+        image(walkSide1, x * tileSize, y * tileSize, tileSize, tileSize);
+      } else if (y% 35 >= 30 && y%35 <=34) {
+        image(walkSide3, x * tileSize, y * tileSize, tileSize, tileSize);
+      }
+    }
   }
 }
