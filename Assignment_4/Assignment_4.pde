@@ -31,7 +31,7 @@ int zombieFrame;
 
 PImage citizenEaten[]; 
 
-PImage walkSide1, walkSide2, walkSide3, street;
+PImage background;
 
 void setup() {
   size(800, 600); //set a default window size for testing, may change to full screen if there is more time
@@ -59,11 +59,7 @@ void setup() {
   citizenEaten[1] = loadImage("citizen_eaten2.png");
   citizenEaten[2] = loadImage("citizen_eaten3.png");
   
-  walkSide1 = loadImage("walkSide1.png");
-  walkSide2 = loadImage("walkSide2.png");
-  walkSide3 = loadImage("walkSide3.png");
-  street= loadImage("street.png");
-
+  background= loadImage("background.png");
   //initialize citizens
   citizens = new ArrayList<citizen>();
   for (int i = 0; i < 10; i++) {
@@ -230,21 +226,5 @@ void keyReleased() {
 }
 
 void updateBackground(){
-  int tileSize = 10; 
-  int rows = height / tileSize; 
-  int cols = width / tileSize;  
-  
-  for (int y = 0; y < rows +1; y++) {
-    for (int x = 0; x < cols +1; x++) {
-      if (y % 35 == 0) {
-        image(walkSide2, x * tileSize, y * tileSize, tileSize, tileSize);
-      } else if (y % 35 >= 1 && y % 35 <= 28) {
-        image(street, x * tileSize, y * tileSize, tileSize, tileSize);
-      } else if (y % 35 == 29) {
-        image(walkSide1, x * tileSize, y * tileSize, tileSize, tileSize);
-      } else if (y% 35 >= 30 && y%35 <=34) {
-        image(walkSide3, x * tileSize, y * tileSize, tileSize, tileSize);
-      }
-    }
-  }
+  image(background, width/2,height/2);
 }
