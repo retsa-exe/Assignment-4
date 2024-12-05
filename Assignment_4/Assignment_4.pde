@@ -4,6 +4,8 @@
 //ID: 991786760            //
 /////////////////////////////
 
+//character arts from: https://www.kenney.nl
+
 int gameState= 0; //0: start screen, 1: game running, 2: game over, 3: player wins
 
 int speed=2;
@@ -26,6 +28,8 @@ int citizenFrame;
 boolean isWalking;
 int zombieFrame;
 
+PImage citizenEaten[]; 
+
 void setup() {
   size(800, 600); //set a default window size for testing, may change to full screen if there is more time
   
@@ -42,6 +46,12 @@ void setup() {
   citizenWalk = new PImage[2];
   citizenWalk[0] = loadImage("citizen_walk1.png");
   citizenWalk[1] = loadImage("citizen_walk2.png");
+  
+  citizenEaten = new PImage[3]; 
+  citizenEaten[0] = loadImage("citizen_eaten1.png");
+  citizenEaten[1] = loadImage("citizen_eaten2.png");
+  citizenEaten[2] = loadImage("citizen_eaten3.png");
+
 
   //initialize citizens
   citizens = new ArrayList<citizen>();
