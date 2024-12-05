@@ -4,7 +4,7 @@
 //ID: 991786760            //
 /////////////////////////////
 
-//character arts from: https://www.kenney.nl
+//character arts from: https: www.kenney.nl
 
 int gameState= 0; //0: start screen, 1: game running, 2: game over, 3: player wins
 
@@ -31,7 +31,7 @@ int zombieFrame;
 
 PImage citizenEaten[]; 
 
-PImage background;
+PImage background, startPage, winPage, losePage;
 
 void setup() {
   size(800, 600); //set a default window size for testing, may change to full screen if there is more time
@@ -60,6 +60,9 @@ void setup() {
   citizenEaten[2] = loadImage("citizen_eaten3.png");
   
   background= loadImage("background.png");
+  startPage =loadImage("startPage.png");
+  winPage =loadImage("winPage.png");
+  losePage =loadImage("losePage.png");
   //initialize citizens
   citizens = new ArrayList<citizen>();
   for (int i = 0; i < 10; i++) {
@@ -76,16 +79,10 @@ void setup() {
 void draw() {
   if (gameState == 0) {
     // Start screen
-    background(0);
-    fill(255);
-    textAlign(CENTER);
-    textSize(32);
-    text("Zombie Simulator", width / 2, height / 2 - 50);
-    textSize(20);
-    text("Press ENTER to start", width / 2, height / 2 + 50);
+    image(startPage,width/2, height/2);
   } else if (gameState == 1) {
     //update background
-    updateBackground();
+    image(background, width/2,height/2);
 
     if (frameCount % 10 == 0) {
       zombieFrame = (zombieFrame + 1) % zombieWalk.length;
@@ -159,22 +156,12 @@ void draw() {
     //draw zombie
     zombie.display();
   } else if (gameState == 2) {
-    // Game over screen (optional)
-    background(0);
-    fill(255, 0, 0);
-    textAlign(CENTER);
-    textSize(32);
-    text("Game Over", width / 2, height / 2 - 50);
-    textSize(20);
-    text("Press R to restart", width / 2, height / 2 + 50);
+    // Game over screen 
+    
+    image(losePage,width/2, height/2);
   } else if (gameState ==3) {
-    background(0);
-    fill(0, 255, 0);
-    textAlign(CENTER);
-    textSize(32);
-    text("You Win!", width / 2, height / 2 - 50);
-    textSize(20);
-    text("Press R to restart", width / 2, height / 2 + 50);
+    
+    image(winPage,width/2, height/2);
   }
 }
 
@@ -223,8 +210,4 @@ void keyReleased() {
   } else if (keyCode == RIGHT) {
     rightPressed = false;
   }
-}
-
-void updateBackground(){
-  image(background, width/2,height/2);
 }
