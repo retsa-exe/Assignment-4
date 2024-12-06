@@ -1,5 +1,5 @@
 class zombies {
-  PVector pos;
+  PVector pos; //zombie positions 
   boolean stayingNearCitizen;
   int stopStartTime;
   int direction = 1;
@@ -23,17 +23,22 @@ class zombies {
     noStroke();
     fill(255);
 
+    //flip the picture accrding to the directions
     pushMatrix();
     translate(pos.x, pos.y);
     scale(direction, 1);
+    
     if (isWalking) {
+      //walking animations
       image(zombieWalk[zombieFrame%2], 0, 0);
     } else {
+      //standing animations
       image(zombieImage, 0, 0);
     }
     popMatrix();
   }
 
+  //record the time when catch a citizen
   void stayNearCitizen() {
     if (!stayingNearCitizen) {
       stopStartTime = millis();
@@ -41,6 +46,7 @@ class zombies {
     }
   }
 
+  //detect if its time to move
   boolean isTimeToMove() {
     if (stayingNearCitizen && millis() - stopStartTime >= 3000) {
       stayingNearCitizen = false; // zombie can move now

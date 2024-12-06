@@ -1,9 +1,9 @@
 class cop {
-  PVector pos;
+  PVector pos; //cop position
   PVector velocity;
   int direction;
 
-  int frame;
+  int frame; //the anamation frame
 
   cop(float x, float y) {
     pos = new PVector(x, y);
@@ -29,11 +29,13 @@ class cop {
     }
 
     if (frameCount % 10 == 0) {
-      frame = (frame + 1) % copWalk.length;
+      frame = (frame + 1) % copWalk.length; //update images every 10 frames
     }
   }
 
   void display() {
+    
+    //show the image according to the directions 
     pushMatrix();
     translate(pos.x, pos.y);
 
