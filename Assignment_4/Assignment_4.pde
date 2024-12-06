@@ -29,13 +29,14 @@ PImage copWalk[];
 boolean isWalking;
 int zombieFrame;
 
-PImage citizenEaten[]; 
+PImage citizenEaten[];
 
 PImage background, startPage, winPage, losePage;
+PImage AHH;
 
 void setup() {
   size(800, 600); //set a default window size for testing, may change to full screen if there is more time
-  
+
   imageMode(CENTER);
 
   zombieImage = loadImage("zombie_stand.png");
@@ -45,24 +46,27 @@ void setup() {
   zombieWalk[1] = loadImage("zombie_walk2.png");
 
   zombie= new zombies (width/2, height/2); //initialize zombie
-  
+
   citizenWalk = new PImage[2];
   citizenWalk[0] = loadImage("citizen_walk1.png");
   citizenWalk[1] = loadImage("citizen_walk2.png");
-  
+
   copWalk = new PImage[2];
   copWalk[0] = loadImage("cop_walk1.png");
   copWalk[1] = loadImage("cop_walk2.png");
-  
-  citizenEaten = new PImage[3]; 
+
+  citizenEaten = new PImage[3];
   citizenEaten[0] = loadImage("citizen_eaten1.png");
   citizenEaten[1] = loadImage("citizen_eaten2.png");
   citizenEaten[2] = loadImage("citizen_eaten3.png");
-  
-  background= loadImage("background.png");
+
+  background = loadImage("background.png");
   startPage =loadImage("startPage.png");
   winPage =loadImage("winPage.png");
   losePage =loadImage("losePage.png");
+
+  AHH = loadImage("AHH.png");
+
   //initialize citizens
   citizens = new ArrayList<citizen>();
   for (int i = 0; i < 10; i++) {
@@ -79,10 +83,10 @@ void setup() {
 void draw() {
   if (gameState == 0) {
     // Start screen
-    image(startPage,width/2, height/2);
+    image(startPage, width/2, height/2);
   } else if (gameState == 1) {
     //update background
-    image(background, width/2,height/2);
+    image(background, width/2, height/2);
 
     if (frameCount % 10 == 0) {
       zombieFrame = (zombieFrame + 1) % zombieWalk.length;
@@ -99,8 +103,7 @@ void draw() {
       citizens.get(i).display();
       citizen c = citizens.get(i);
       if (isCloseToZombie(zombie, c)) {
-        fill(255, 0, 0);
-        text("AHHHHHHHH!", c.pos.x + 10, c.pos.y - 10);
+        image(AHH, c.pos.x, c.pos.y-50);
 
         c.stayNearZombie();
         zombie.stayNearCitizen();
@@ -146,7 +149,7 @@ void draw() {
         zombie.move(speed, 0);
       }
     }
-    
+
     if (leftPressed || rightPressed || upPressed || downPressed) {
       isWalking=true;
     } else {
@@ -156,12 +159,12 @@ void draw() {
     //draw zombie
     zombie.display();
   } else if (gameState == 2) {
-    // Game over screen 
-    
-    image(losePage,width/2, height/2);
+    // Game over screen
+
+    image(losePage, width/2, height/2);
   } else if (gameState ==3) {
-    
-    image(winPage,width/2, height/2);
+
+    image(winPage, width/2, height/2);
   }
 }
 
